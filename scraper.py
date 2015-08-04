@@ -52,7 +52,6 @@ def convert_mth_strings ( mth_string ):
     #loop through the months in our dictionary
     for k, v in month_numbers.items():
 #then replace the word with the number
-
         mth_string = mth_string.replace(k, v)
     return mth_string
 # pull down the content from the webpage
@@ -63,12 +62,14 @@ block = soup.find('div', attrs = {'class':'content'})
 links = block.findAll('a', 'doc-icon')
 for link in links:
     csvfile = link['href']
-  #  if '.csv' in csvfile:
-    if '.csv' or '.xlsx' in csvfile:
+    if '.pdf' not in csvfile:
         url = link['href']
         csvfiles = csvfile.split('%20')
         csvYr =  csvfiles[-1].split('.')[0]
         csvMth = csvfiles[-2]
+        if '.csv' in csvfiles[-1]:
+            csvMth = 'March'
+            csvYr = '2015'
         if 'Qtr1' in csvfiles[-1]:
             csvMth = 'March'
             csvYr = '2014'
